@@ -1,7 +1,7 @@
 services:
   irail-mcp:
     build: .
-    image: irail-mcp:latest
+    image: ghcr.io/cyberdotgent/irail-mcp:latest
     ports:
       - "8000:8000"
     restart: unless-stopped

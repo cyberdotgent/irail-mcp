@@ -15,7 +15,7 @@ FROM python:3.12-slim-bookworm
 
 LABEL org.opencontainers.image.title="irail-mcp" \
       org.opencontainers.image.description="MCP server for Belgian railway data via the iRail API" \
-      org.opencontainers.image.source="https://github.com/HansF/irail-mcp" \
+      org.opencontainers.image.source="https://github.com/cyberdotgent/irail-mcp" \
       org.opencontainers.image.licenses="MIT"
 
 RUN groupadd --system app && useradd --system --gid app --no-create-home app

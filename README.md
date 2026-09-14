@@ -78,7 +78,13 @@ Open WebUI running in Docker cannot reach `127.0.0.1` on the host, so start the 
 
 ### Docker
 
-A multi-stage `Dockerfile` is included. The image runs as a non-root user, exposes the HTTP transport on port 8000 and has a built-in health check.
+A prebuilt multi-arch image (amd64/arm64) is published to GitHub Container Registry on every push to `main` (`latest`) and on version tags:
+
+```bash
+docker run -d --name irail-mcp -p 8000:8000 ghcr.io/cyberdotgent/irail-mcp:latest
+```
+
+Or build it yourself from the included multi-stage `Dockerfile`. The image runs as a non-root user, exposes the HTTP transport on port 8000 and has a built-in health check.
 
 ```bash
 docker build -t irail-mcp .
