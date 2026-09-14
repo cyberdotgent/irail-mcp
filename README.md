@@ -44,6 +44,73 @@ Then ask Claude things like:
 - "Are there any disruptions on the Belgian rail network?"
 - "Show me details for train IC2240"
 
+## Usage over Streamable HTTP (Open WebUI, remote clients)
+
+The server can also be exposed over the MCP [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http) transport, which is what Open WebUI and most web-based MCP clients expect:
+
+```bash
+uvx irail-mcp --transport http --host 0.0.0.0 --port 8000
+```
+
+The MCP endpoint is then available at `http://<host>:8000/mcp` and a simple health check at `http://<host>:8000/health`.
+
+Options:
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--transport` | `stdio` | `stdio` or `http` |
+| `--host` | `127.0.0.1` | Bind address (use `0.0.0.0` inside Docker) |
+| `--port` | `8000` | Listen port |
+| `--path` | `/mcp` | Path of the MCP endpoint |
+| `--stateless` | off | No server-side sessions; each request is independent |
+| `--json-response` | off | Return plain JSON instead of SSE streams |
+| `--allowed-host HOST` | unset | Enable DNS-rebinding protection for the given `Host` values (repeatable) |
+| `--log-level` | `INFO` | `DEBUG`, `INFO`, `WARNING`, `ERROR` |
+
+### Open WebUI
+
+In Open WebUI go to **Admin Panel → Settings → External Tools** (or **Settings → Tools** for a user-level connection), add a new connection with:
+
+- **Type:** MCP (Streamable HTTP)
+- **URL:** `http://<host>:8000/mcp`
+
+Open WebUI running in Docker cannot reach `127.0.0.1` on the host, so start the server with `--host 0.0.0.0` and use the host's LAN address, or `host.docker.internal` where supported. When exposing the server beyond localhost, put it behind a reverse proxy with authentication; the server itself does not authenticate requests.
+
+### Docker
+
+A multi-stage `Dockerfile` is included. The image runs as a non-root user, exposes the HTTP transport on port 8000 and has a built-in health check.
+
+```bash
+docker build -t irail-mcp .
+docker run -d --name irail-mcp -p 8000:8000 irail-mcp
+```
+
+Or with Compose:
+
+```bash
+docker compose up -d
+```
+
+The MCP endpoint is `http://localhost:8000/mcp`. Extra arguments are passed straight to the server, so the transport can be changed at run time:
+
+```bash
+# stdio mode (e.g. for a desktop MCP client that launches Docker)
+docker run -i --rm irail-mcp --transport stdio
+
+# HTTP on a custom path with DNS-rebinding protection
+docker run -p 8000:8000 irail-mcp --transport http --host 0.0.0.0 --path /irail --allowed-host irail.example.com
+```
+
+When Open WebUI runs in another container, put both on the same Docker network and use `http://irail-mcp:8000/mcp` as the URL.
+
+### Embedding in your own ASGI app
+
+```python
+from irail_mcp.server import build_http_app
+
+app = build_http_app(path="/mcp")  # a Starlette app; serve with uvicorn/hypercorn
+```
+
 ## Tools
 
 ### search_stations

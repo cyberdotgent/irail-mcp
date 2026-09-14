@@ -474,21 +474,167 @@ async def _get_disturbances(client: iRailClient, arguments: dict) -> str:
     return "\n".join(lines)
 
 
-async def main():
-    """Run the MCP server."""
+async def run_stdio() -> None:
+    """Run the MCP server over stdio (default, used by Claude Code and similar)."""
     from mcp.server.stdio import stdio_server
-
-    logging.basicConfig(level=logging.INFO)
 
     async with stdio_server() as (read_stream, write_stream):
         init_options = app.create_initialization_options()
         await app.run(read_stream, write_stream, init_options)
 
 
-def cli():
+def build_http_app(
+    path: str = "/mcp",
+    stateless: bool = False,
+    json_response: bool = False,
+    allowed_hosts: list[str] | None = None,
+):
+    """Build a Starlette ASGI app exposing the server via Streamable HTTP.
+
+    The returned app can be served by any ASGI server (uvicorn, hypercorn, ...)
+    and mounted next to other apps. Suitable for clients such as Open WebUI.
+    """
+    import contextlib
+
+    from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
+    from mcp.server.transport_security import TransportSecuritySettings
+    from starlette.applications import Starlette
+    from starlette.responses import JSONResponse
+    from starlette.routing import Route
+
+    if not path.startswith("/"):
+        path = "/" + path
+    path = path.rstrip("/") or "/"
+
+    # Only enable DNS-rebinding protection when the operator lists hosts;
+    # otherwise the server is reachable behind arbitrary hostnames/proxies.
+    security = None
+    if allowed_hosts:
+        security = TransportSecuritySettings(
+            enable_dns_rebinding_protection=True,
+            allowed_hosts=allowed_hosts,
+        )
+
+    session_manager = StreamableHTTPSessionManager(
+        app=app,
+        event_store=None,
+        json_response=json_response,
+        stateless=stateless,
+        security_settings=security,
+    )
+
+    class _MCPEndpoint:
+        """Raw ASGI endpoint so the exact path matches without slash redirects."""
+
+        async def __call__(self, scope, receive, send):
+            await session_manager.handle_request(scope, receive, send)
+
+    async def health(_request):
+        return JSONResponse({"status": "ok", "server": "irail-mcp", "mcp_path": path})
+
+    @contextlib.asynccontextmanager
+    async def lifespan(_app):
+        async with session_manager.run():
+            logger.info("iRail MCP Streamable HTTP endpoint ready at %s", path)
+            yield
+
+    return Starlette(
+        routes=[
+            Route("/health", health, methods=["GET"]),
+            Route(path, _MCPEndpoint(), methods=["GET", "POST", "DELETE"]),
+            Route(path + "/", _MCPEndpoint(), methods=["GET", "POST", "DELETE"]),
+        ],
+        lifespan=lifespan,
+    )
+
+
+def run_http(
+    host: str = "127.0.0.1",
+    port: int = 8000,
+    path: str = "/mcp",
+    stateless: bool = False,
+    json_response: bool = False,
+    allowed_hosts: list[str] | None = None,
+) -> None:
+    """Serve the MCP server over Streamable HTTP with uvicorn."""
+    import uvicorn
+
+    http_app = build_http_app(
+        path=path,
+        stateless=stateless,
+        json_response=json_response,
+        allowed_hosts=allowed_hosts,
+    )
+    logger.info("Starting iRail MCP over Streamable HTTP on http://%s:%d%s", host, port, path)
+    uvicorn.run(http_app, host=host, port=port, log_level="info")
+
+
+async def main():
+    """Run the MCP server over stdio (kept for backwards compatibility)."""
+    logging.basicConfig(level=logging.INFO)
+    await run_stdio()
+
+
+def _build_parser():
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        prog="irail-mcp",
+        description="MCP server for Belgian railway data via the iRail API.",
+    )
+    parser.add_argument(
+        "--transport",
+        choices=["stdio", "http"],
+        default="stdio",
+        help="Transport to use: 'stdio' (default) or 'http' (Streamable HTTP, e.g. for Open WebUI).",
+    )
+    parser.add_argument("--host", default="127.0.0.1", help="HTTP bind address (default: 127.0.0.1).")
+    parser.add_argument("--port", type=int, default=8000, help="HTTP port (default: 8000).")
+    parser.add_argument("--path", default="/mcp", help="HTTP path of the MCP endpoint (default: /mcp).")
+    parser.add_argument(
+        "--stateless",
+        action="store_true",
+        help="Run HTTP transport without server-side sessions (each request is independent).",
+    )
+    parser.add_argument(
+        "--json-response",
+        action="store_true",
+        help="Return plain JSON responses instead of SSE streams over HTTP.",
+    )
+    parser.add_argument(
+        "--allowed-host",
+        action="append",
+        dest="allowed_hosts",
+        metavar="HOST",
+        help="Enable DNS-rebinding protection and allow this Host header value (repeatable).",
+    )
+    parser.add_argument(
+        "--log-level",
+        default="INFO",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR"],
+        help="Logging level (default: INFO).",
+    )
+    return parser
+
+
+def cli(argv: list[str] | None = None):
     """Entry point for console script."""
     import asyncio
-    asyncio.run(main())
+
+    args = _build_parser().parse_args(argv)
+    logging.basicConfig(level=getattr(logging, args.log_level))
+
+    if args.transport == "http":
+        run_http(
+            host=args.host,
+            port=args.port,
+            path=args.path,
+            stateless=args.stateless,
+            json_response=args.json_response,
+            allowed_hosts=args.allowed_hosts,
+        )
+    else:
+        asyncio.run(run_stdio())
 
 
 if __name__ == "__main__":
