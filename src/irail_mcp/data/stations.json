@@ -363,6 +363,17 @@
     "country_code": "be"
   },
   {
+    "uri": "http://irail.be/stations/NMBS/008894839",
+    "name": "Antwerpen-Linkeroever",
+    "alternative_fr": "Anvers-Linkeroever",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "Antwerp-Linkeroever",
+    "longitude": "4.360044",
+    "latitude": "51.215685",
+    "country_code": "be"
+  },
+  {
     "uri": "http://irail.be/stations/NMBS/008821063",
     "name": "Antwerpen-Luchtbal",
     "alternative_fr": "Anvers-Luchtbal",
@@ -880,6 +891,17 @@
     "country_code": "be"
   },
   {
+    "uri": "http://irail.be/stations/NMBS/008007799",
+    "name": "Berlin Gesundbrunnen",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "13.391000",
+    "latitude": "52.548800",
+    "country_code": "de"
+  },
+  {
     "uri": "http://irail.be/stations/NMBS/008065969",
     "name": "Berlin Hbf",
     "alternative_fr": "",
@@ -1133,8 +1155,19 @@
     "country_code": "be"
   },
   {
+    "uri": "http://irail.be/stations/NMBS/008015485",
+    "name": "Bonn Hbf",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "7.097204",
+    "latitude": "50.731972",
+    "country_code": "de"
+  },
+  {
     "uri": "http://irail.be/stations/NMBS/008015577",
-    "name": "Bonn-Beuel (DE)",
+    "name": "Bonn-Beuel",
     "alternative_fr": "",
     "alternative_nl": "",
     "alternative_de": "",
@@ -2113,7 +2146,7 @@
   },
   {
     "uri": "http://irail.be/stations/NMBS/008015653",
-    "name": "Duesseldorf Flughafen (DE)",
+    "name": "Düsseldorf Flughafen",
     "alternative_fr": "",
     "alternative_nl": "",
     "alternative_de": "",
@@ -2124,7 +2157,7 @@
   },
   {
     "uri": "http://irail.be/stations/NMBS/008008094",
-    "name": "Duesseldorf Hbf",
+    "name": "Düsseldorf Hbf",
     "alternative_fr": "Düsseldorf Hbf",
     "alternative_nl": "Düsseldorf Hbf",
     "alternative_de": "Düsseldorf Hbf",
@@ -2761,6 +2794,17 @@
     "country_code": "de"
   },
   {
+    "uri": "http://irail.be/stations/NMBS/008020110",
+    "name": "Freilassing",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "12.977200",
+    "latitude": "47.836700",
+    "country_code": "de"
+  },
+  {
     "uri": "http://irail.be/stations/NMBS/008885068",
     "name": "Froyennes",
     "alternative_fr": "",
@@ -3166,6 +3210,17 @@
     "longitude": "4.66301",
     "latitude": "50.944251",
     "country_code": "be"
+  },
+  {
+    "uri": "http://irail.be/stations/NMBS/008001135",
+    "name": "Hamburg-Harburg",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "9.991800",
+    "latitude": "53.456300",
+    "country_code": "de"
   },
   {
     "uri": "http://irail.be/stations/NMBS/008842846",
@@ -3927,9 +3982,9 @@
     "country_code": "be"
   },
   {
-    "uri": "http://irail.be/stations/NMBS/008019022",
-    "name": "Koblenz Hbf (DE)",
-    "alternative_fr": "",
+    "uri": "http://irail.be/stations/NMBS/008019023",
+    "name": "Koblenz Hbf",
+    "alternative_fr": "Coblence Hbf",
     "alternative_nl": "",
     "alternative_de": "",
     "alternative_en": "",
@@ -4012,6 +4067,28 @@
     "alternative_en": "",
     "longitude": "6.958823",
     "latitude": "50.942721",
+    "country_code": "de"
+  },
+  {
+    "uri": "http://irail.be/stations/NMBS/008015714",
+    "name": "Köln Süd",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "6.938600",
+    "latitude": "50.927100",
+    "country_code": "de"
+  },
+  {
+    "uri": "http://irail.be/stations/NMBS/008015321",
+    "name": "Köln-Ehrenfeld",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "6.914889",
+    "latitude": "50.951538",
     "country_code": "de"
   },
   {
@@ -4477,6 +4554,17 @@
     "country_code": "be"
   },
   {
+    "uri": "http://irail.be/stations/NMBS/008101073",
+    "name": "Linz Hbf",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "14.291190",
+    "latitude": "48.290530",
+    "country_code": "at"
+  },
+  {
     "uri": "http://irail.be/stations/NMBS/008891629",
     "name": "Lissewege",
     "alternative_fr": "",
@@ -4742,7 +4830,7 @@
   },
   {
     "uri": "http://irail.be/stations/NMBS/008019052",
-    "name": "Mainz Hbf (DE)",
+    "name": "Mainz Hbf",
     "alternative_fr": "",
     "alternative_nl": "",
     "alternative_de": "",
@@ -5269,6 +5357,17 @@
     "country_code": "be"
   },
   {
+    "uri": "http://irail.be/stations/NMBS/008019585",
+    "name": "Montabaur",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "7.825200",
+    "latitude": "50.444700",
+    "country_code": "de"
+  },
+  {
     "uri": "http://irail.be/stations/NMBS/008777300",
     "name": "Montpellier",
     "alternative_fr": "",
@@ -5454,6 +5553,17 @@
     "longitude": "5.587236",
     "latitude": "50.54762",
     "country_code": "be"
+  },
+  {
+    "uri": "http://irail.be/stations/NMBS/008020234",
+    "name": "München Ost",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "11.603624",
+    "latitude": "48.128172",
+    "country_code": "de"
   },
   {
     "uri": "http://irail.be/stations/NMBS/008863008",
@@ -5852,6 +5962,17 @@
     "country_code": "be"
   },
   {
+    "uri": "http://irail.be/stations/NMBS/008711300",
+    "name": "Paris Est",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "2.358926",
+    "latitude": "48.877371",
+    "country_code": "fr"
+  },
+  {
     "uri": "http://irail.be/stations/NMBS/008727100",
     "name": "Paris Nord",
     "alternative_fr": "",
@@ -6248,6 +6369,17 @@
     "country_code": "nl"
   },
   {
+    "uri": "http://irail.be/stations/NMBS/008020174",
+    "name": "Rosenheim",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "12.120817",
+    "latitude": "47.849080",
+    "country_code": "de"
+  },
+  {
     "uri": "http://irail.be/stations/NMBS/008400530",
     "name": "Rotterdam CS",
     "alternative_fr": "",
@@ -6345,6 +6477,17 @@
     "longitude": "6.768825",
     "latitude": "43.423456",
     "country_code": "fr"
+  },
+  {
+    "uri": "http://irail.be/stations/NMBS/008101114",
+    "name": "Salzburg Hbf",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "13.046003",
+    "latitude": "47.813239",
+    "country_code": "at"
   },
   {
     "uri": "http://irail.be/stations/NMBS/008864956",
@@ -6741,6 +6884,17 @@
     "longitude": "5.866207",
     "latitude": "50.489307",
     "country_code": "be"
+  },
+  {
+    "uri": "http://irail.be/stations/NMBS/008101032",
+    "name": "St. Pölten Hbf",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "15.624571",
+    "latitude": "48.208150",
+    "country_code": "at"
   },
   {
     "uri": "http://irail.be/stations/NMBS/008843406",
@@ -7565,6 +7719,17 @@
     "alternative_en": "Vienna Main Station",
     "longitude": "16.375864",
     "latitude": "48.184923",
+    "country_code": "at"
+  },
+  {
+    "uri": "http://irail.be/stations/NMBS/008103107",
+    "name": "Wien Meidling",
+    "alternative_fr": "",
+    "alternative_nl": "",
+    "alternative_de": "",
+    "alternative_en": "",
+    "longitude": "16.336225",
+    "latitude": "48.174842",
     "country_code": "at"
   },
   {
